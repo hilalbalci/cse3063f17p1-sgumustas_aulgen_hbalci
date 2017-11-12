@@ -5,7 +5,13 @@ public class GoSquare extends Square {
 
 	@Override
 	public void doAction(Player player, Board board) {
-		player.getMoney().increaseMoney(200);
+		
+		System.out.println("[Turn " + (player.getMovement() + 1) + "] [" +
+		board.squares[player.getPreviousLocation()].getName() + "] [TL"
+		+ player.getMoney().getMoney() + "] " + player.getName() + 
+		" will gain TL200 by passing through Start!");
+		
+		player.increaseMoney(200);
 	}
 
 }

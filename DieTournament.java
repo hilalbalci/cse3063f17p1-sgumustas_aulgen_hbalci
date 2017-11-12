@@ -5,9 +5,8 @@ public class DieTournament {
 		for (int i = 0; i < length; i++) {
 			tossTournament(players[i]);
 		}
-		System.out.println();
 		sort(players, length);
-		System.out.println("\nNew Precedence of Starts:\n");
+		System.out.print("\nNew Precedence of Starts: ");
 		printNewList(players, length);
 	}
 	

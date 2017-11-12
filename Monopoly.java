@@ -1,9 +1,8 @@
 import java.util.Scanner;
 
 public class Monopoly {
-	Die die1 = new Die(), die2 = new Die();
 	private static Scanner scanner = new Scanner(System.in);
-	Board board;
+	private Board board;
 	
 	public Monopoly(int totalPlayer, String [] playerNames) {
 		board = new Board(totalPlayer, playerNames);
@@ -15,7 +14,7 @@ public class Monopoly {
 		int totalPlayer = getDesiredPlayerNumber();
 		String [] playerNames = getDesiredPlayerName(totalPlayer);
 		Monopoly game = new Monopoly(totalPlayer, playerNames);
-		game.startGame(10000*totalPlayer);
+		game.startGame(500*totalPlayer);
 	}
 	
 	public void startGame(int a) {
@@ -70,7 +69,7 @@ public class Monopoly {
 	
 	private static String [] getDesiredPlayerName (int totalPlayer) {
 		String [] names = new String[totalPlayer]; 
-		System.out.println("Can you please give player names?\n");
+		System.out.println("\nCan you please give player names?\n");
 		for (int i = 0; i < totalPlayer; i++) {
 			if (i == 0) {
 				System.out.print((i+1) + "st ");
@@ -83,8 +82,8 @@ public class Monopoly {
 			}
 			System.out.print("Player's name: ");
 			names[i] = scanner.nextLine();
-			System.out.println();
 		}
+		System.out.println();
 		scanner.close();
 		return names;
 	}

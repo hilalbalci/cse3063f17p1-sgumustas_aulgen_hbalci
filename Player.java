@@ -1,10 +1,12 @@
 public class Player {
-	private int tournamentID = 0, id, location = 0, movement = 0, previousLocation = 0;
+	private int tournamentID = 0, id, location = 0, movement = 0, previousLocation = 0, jailHolder=0;
 	private String name;
-	Money money = new Money();
-	private boolean status = false;
+	private Money money = new Money();
+	private boolean status = false, isInPrison = false;
+	Die die = new Die();
 	
 	public Player (int id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 	
@@ -12,20 +14,39 @@ public class Player {
 		return movement;
 	}
 	
+	public void sendToJail() {
+		this.setLocation(10);
+		isInPrison = true;
+	}
+	
+	public void getOutOfJail () {
+		isInPrison = false;
+	}
+	
+	public boolean isInJail () {
+		return isInPrison;
+	}
+	
 	public int getID() {
 		return id;
 	}
 	
 	public int tossDie (Player player, Square [] array) {
-		int temp = player.getLocation(), dieValue1, dieValue2;
-		Die die = new Die();
-		dieValue1 = die.getDiceValue();
-		dieValue2 = die.getDiceValue();
-		System.out.println("[Turn " + (player.getMovement() + 1) + "] ["
-				+ array[temp].getName() + "] [TL"
-				+ player.getMoney().getMoney() + "] " + player.getName() + 
-				" tossed " + dieValue1 + " and " + dieValue2 + " at total " + (dieValue1 + dieValue2) + ".");
-		return dieValue1 + dieValue2;
+		if (!player.isInJail()) {
+			int temp = player.getLocation(), dieValue1, dieValue2;
+			dieValue1 = die.getDiceValue();
+			dieValue2 = die.getDiceValue();
+			System.out.println("[Turn " + (player.getMovement() + 1) + "] ["
+					+ array[temp].getName() + "] [TL"
+					+ player.getMoney().getMoney() + "] " + player.getName() + 
+					" tossed " + dieValue1 + " and " + dieValue2 + " at total " + (dieValue1 + dieValue2) + ".");
+			return dieValue1 + dieValue2;
+		}
+		return 0;
+	}
+	
+	public int tossSingleDie () {
+		return die.getDiceValue();
 	}
 	
 	public void setTournamentID (int tournamentID) {
@@ -46,10 +67,6 @@ public class Player {
 	
 	public void setLocation (int location) {
 		this.location = location;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	public int getLocation () {
@@ -82,5 +99,17 @@ public class Player {
 	
 	public boolean hasLost() {
 		return status;
+	}
+	
+	public int jailHolder() {
+		return jailHolder;
+	}
+	
+	public void increaseJailHolder() {
+		jailHolder++;
+	}
+	
+	public void setJailHolderZero() {
+		jailHolder = 0;
 	}
 }
