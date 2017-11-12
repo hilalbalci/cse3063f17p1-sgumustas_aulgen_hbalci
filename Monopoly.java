@@ -7,22 +7,33 @@ public class Monopoly {
 	
 	public Monopoly(int totalPlayer, String [] playerNames) {
 		board = new Board(totalPlayer, playerNames);
-		DieTournament dt = new DieTournament(board.getPlayers());
+		DieTournament.makeTournament(board.getPlayers());
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("\tMonopoly\n");
+		System.out.println("Welcome to Monopoly!\n");
 		int totalPlayer = getDesiredPlayerNumber();
 		String [] playerNames = getDesiredPlayerName(totalPlayer);
 		Monopoly game = new Monopoly(totalPlayer, playerNames);
-		game.startGame();
+		game.startGame(10000*totalPlayer);
 	}
 	
-	public void startGame() {
+	public void startGame(int a) {
 		System.out.println("GAME STARTS!\n==========");
-		for (int i = 0; i<25; i++) {
-			board.makeMovement(i);
+		Player temp;
+		int i = 0;
+		while (i < a && !board.isOver()) {
+			temp = board.getPlayer();
+			if (!temp.hasLost()) {
+				board.movePlayer(temp, temp.tossDie(temp, board.squares));
+			}
+			board.nextTurn();
+			i++;
 		}
+	/*	System.out.println("Bankrupt Players: ");
+		for (int k = 0; i<board.getBankRuptedPlayers().size(); k++) {
+			System.out.println(board.getBankRuptedPlayers().get(k).getName());
+		}*/
 		System.out.println("========\nEND GAME");
 	}
 
@@ -51,7 +62,7 @@ public class Monopoly {
 			}
 			number = Integer.parseInt(input);
 			if (number > 8 || number < 2) {
-				System.err.println("You must enter a number between 2 - 8!");
+				System.err.println("\nYou must enter a number between 2 - 8!");
 			}
 		} while (number > 8  || number < 2);
 		return number;

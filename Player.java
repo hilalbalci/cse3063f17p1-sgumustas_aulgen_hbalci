@@ -1,19 +1,31 @@
 public class Player {
-	private int tournamentID = 0, id;
-	private int location = 0;
+	private int tournamentID = 0, id, location = 0, movement = 0, previousLocation = 0;
 	private String name;
+	Money money = new Money();
+	private boolean status = false;
 	
 	public Player (int id, String name) {
 		this.name = name;
+	}
+	
+	public int getMovement () {
+		return movement;
 	}
 	
 	public int getID() {
 		return id;
 	}
 	
-	public void tossTournament(Die die) {
-		setTournamentID(die.getDiceValue());
-		System.out.println(this.getName() + " tossed " + this.getTournamentID() + " in tournament.");
+	public int tossDie (Player player, Square [] array) {
+		int temp = player.getLocation(), dieValue1, dieValue2;
+		Die die = new Die();
+		dieValue1 = die.getDiceValue();
+		dieValue2 = die.getDiceValue();
+		System.out.println("[Turn " + (player.getMovement() + 1) + "] ["
+				+ array[temp].getName() + "] [TL"
+				+ player.getMoney().getMoney() + "] " + player.getName() + 
+				" tossed " + dieValue1 + " and " + dieValue2 + " at total " + (dieValue1 + dieValue2) + ".");
+		return dieValue1 + dieValue2;
 	}
 	
 	public void setTournamentID (int tournamentID) {
@@ -22,6 +34,14 @@ public class Player {
 	
 	public int getTournamentID () {
 		return tournamentID;
+	}
+	
+	public int getPreviousLocation () {
+		return previousLocation;
+	}
+	
+	public void setPreviousLocation (int a) {
+		previousLocation = a;
 	}
 	
 	public void setLocation (int location) {
@@ -38,5 +58,29 @@ public class Player {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public void reduceMoney (int a) {
+		this.money.reduceMoney(a);
+	}
+	
+	public void increaseMoney (int a) {
+		this.money.increaseMoney(a);
+	}
+	
+	public Money getMoney() {
+		return this.money;
+	}
+	
+	public void nextTurn() {
+		movement++;
+	}
+	
+	public void setLost (boolean a) {
+		status = a;
+	}
+	
+	public boolean hasLost() {
+		return status;
 	}
 }
