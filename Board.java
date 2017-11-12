@@ -1,18 +1,17 @@
 import java.util.Random;
 
-//import java.util.ArrayList;
-
 public class Board {
-	//private ArrayList<Player> bankRupt = new ArrayList<Player>();
 	private Player[] players;
+	private Player [] bankRuptedPlayers;
 	Square[] squares = new Square[40];
 	Die die = new Die();
-	int turn = 0;
+	int turn = 0, i=0;
 	public Player[] getPlayers() {
 		return players;
 	}
 	public Board (int totalPlayer, String [] playerNames) {
 		players = new Player[totalPlayer];
+		bankRuptedPlayers = new Player[totalPlayer];
 		for (int i = 0; i<totalPlayer; i++) {
 			players[i] = new Player(i, playerNames[i]);
 		}
@@ -39,69 +38,36 @@ public class Board {
 	}
 	
 	public void movePlayer(Player player, int face) {
-		int temp = player.getLocation(), newPosition = (temp + face) % 40, turn = player.getMovement() + 1;
+		int temp = player.getLocation(), newPosition = (temp + face) % 40;
 		player.setPreviousLocation(temp);
 		if (player.isInJail() && player.jailHolder()<2) {
 			int choice = choose();
 			int a = player.tossSingleDie();
 			int b = player.tossSingleDie();
 			
-			System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-					+ player.getMoney().getMoney() + "] " + player.getName() + 
-					" is in jail. This is turn " + player.jailHolder() + " in jail! " + player.getName() + " will make a choice.");
-						
+			Printer.print(player, " is in jail. This is turn " + player.jailHolder() + " in jail! " + player.getName() + " will make a choice.", squares);
+	
 			if (choice == 0 && a==b) {
 				
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" chose to get out of jail by throwing double.");
-				
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" tossed " + a + " and " + b + ". Getting out of jail!");
-				
+				Printer.print(player, " chose to get out of jail by throwing double.", squares);
+				Printer.print(player, " tossed " + a + " and " + b + ". Getting out of jail!", squares);
 				
 				player.getOutOfJail();
 				player.setJailHolderZero();
 				player.setLocation(10 + a + b);
 				squares[10 + a + b].doAction(player, this);
 			
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" is visiting " + squares[10 + a + b].getName());
-			
-			
-			
+				Printer.print(player, " is visiting " + squares[10 + a + b].getName(), squares);
 			} else if (choice == 0 && a!=b) {
 				
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" chose to get out of jail by throwing double. If not " + player.getName() + " will wait.");
-				
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" tossed " + a + " and " + b + ". Can't get out of jail!");
-				
+				Printer.print(player, " chose to get out of jail by throwing double. If not " + player.getName() + " will wait.", squares);
+				Printer.print(player, " tossed " + a + " and " + b + ". Can't get out of jail!", squares);
 				
 				player.increaseJailHolder();
-				
 			} else {
 				
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" chose to get out of jail by paying TL50 whether " + player.getName() + " throws double dice or not.");
-				
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" tossed " + a + " and " + b + ". Getting out of jail!");
-				
+				Printer.print(player, " chose to get out of jail by paying TL50 whether " + player.getName() + " throws double dice or not.", squares);
+				Printer.print(player, " tossed " + a + " and " + b + ". Getting out of jail!", squares);
 				
 				player.getOutOfJail();
 				player.setJailHolderZero();
@@ -109,53 +75,42 @@ public class Board {
 				player.reduceMoney(50);
 				squares[10 + a + b].doAction(player, this);
 				
-				
-				System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-						+ player.getMoney().getMoney() + "] " + player.getName() + 
-						" has lost TL50 to get out of Jail and is visiting " + squares[10 + a + b].getName());
+				Printer.print(player, " has lost TL50 to get out of Jail and is visiting " + squares[10 + a + b].getName(), squares);
 			}
 		} else if (player.isInJail() && player.jailHolder()==2) {
-			System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-					+ player.getMoney().getMoney() + "] " + player.getName() + 
-					" is in jail. This is turn 3 in jail! Player will get out by paying.");
+			Printer.print(player, " is in jail. This is turn 3 in jail! Player will get out by paying.", squares);
 			
 			player.setJailHolderZero();
 			player.getOutOfJail();
 			player.reduceMoney(50);
 			
-			System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-					+ player.getMoney().getMoney() + "] " + player.getName() + 
-					" has lost TL50 to get out of Jail and is visiting " + squares[newPosition].getName());
+			Printer.print(player, " has lost TL50 to get out of Jail and is visiting " + squares[newPosition].getName(), squares);
 			
 			player.setLocation(newPosition);
 			squares[newPosition].doAction(player, this);
 		} else if (newPosition == 30) {
 			squares[30].doAction(player, this);
 		} else {
-			
-			System.out.println("[Turn " + turn + "] [" + squares[temp].getName() + "] [TL"
-					+ player.getMoney().getMoney() + "] " + player.getName() + 
-					" is visiting " + squares[newPosition].getName());
+			Printer.print(player, " is visiting " + squares[newPosition].getName(), squares);
 			
 			player.setLocation(newPosition);
 			squares[newPosition].doAction(player, this);
 		}
 		
 		if (player.getMoney().hasLost()) {
-			System.out.println("[Turn " + turn + "] ["
-					+ squares[newPosition].getName() + "] [TL"
-					+ player.getMoney().getMoney() + "] " + player.getName() + 
-					" has lost the game due to bankrupt!");
+			Printer.print(player, " has lost the game due to bankrupt!", squares);
 			player.setLost(true);
+			bankRuptedPlayers[i++] = player;
 		} else {
 			player.nextTurn();
 		}
 	}
+
 	
-/*	public ArrayList<Player> getBankRuptedPlayers () {
-		return bankRupt;
+	public Player [] getBankRuptedPlayers () {
+		return bankRuptedPlayers;
 	}
-	*/
+	
 	public boolean isOver() {
 		int i = 0, length = players.length;
 		for (int k = 0; k<length; k++) {

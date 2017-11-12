@@ -13,10 +13,12 @@ public class DieTournament {
 	public static void printNewList(Player [] players, int length) {
 		//int length = players.length;
 		for (int i = 0; i< length; i++) {
-			if (i!=length - 1)
-			System.out.print(players[i].getName() + ", ");
-			else
-				System.out.println(players[i].getName() + "\n");	
+			if(players[i]!=null) {
+				if (i!=length - 1)
+					System.out.print(players[i].getName() + ", ");
+					else
+						System.out.println(players[i].getName() + "\n");
+			}	
 		}
 	}
 	

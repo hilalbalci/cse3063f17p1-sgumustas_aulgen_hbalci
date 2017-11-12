@@ -29,11 +29,9 @@ public class Monopoly {
 			board.nextTurn();
 			i++;
 		}
-	/*	System.out.println("Bankrupt Players: ");
-		for (int k = 0; i<board.getBankRuptedPlayers().size(); k++) {
-			System.out.println(board.getBankRuptedPlayers().get(k).getName());
-		}*/
 		System.out.println("========\nEND GAME");
+		System.out.print("\nBankrupt players are: ");
+		DieTournament.printNewList(board.getBankRuptedPlayers(), board.getBankRuptedPlayers().length);
 	}
 
 	
