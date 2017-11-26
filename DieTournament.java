@@ -48,19 +48,20 @@ public class DieTournament {
 		for (int i = 0; i < length; i++) {
 			tossTournament(players[i]);
 		}
-		System.out.println();
 		sort(players, length);
-		System.out.println("\nNew Precedence of Starts:\n");
+		System.out.print("\nNew Precedence of Starts: ");
 		printNewList(players, length);
 	}
 	
 	public static void printNewList(Player [] players, int length) {
 		//int length = players.length;
 		for (int i = 0; i< length; i++) {
-			if (i!=length - 1)
-			System.out.print(players[i].getName() + ", ");
-			else
-				System.out.println(players[i].getName() + "\n");	
+			if(players[i]!=null) {
+				if (i!=length - 1)
+					System.out.print(players[i].getName() + ", ");
+					else
+						System.out.println(players[i].getName() + "\n");
+			}	
 		}
 	}
 	

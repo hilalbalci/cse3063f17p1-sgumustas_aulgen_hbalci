@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.util.Random;
 
 public class Jail extends Square {
@@ -54,17 +53,3 @@ public class Jail extends Square {
         }
     }
 }
-=======
-public class Jail extends Square {
-	public Jail(String name) {
-		super(name);
-	}
-
-	@Override
-	public void doAction(Player player, Board board) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-}
->>>>>>> eafa3ad1d8f6dc5c8999e635de3730c7e86992c7

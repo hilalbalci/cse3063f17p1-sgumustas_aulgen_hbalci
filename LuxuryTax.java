@@ -1,6 +1,5 @@
 public class LuxuryTax extends Square {
 
-<<<<<<< HEAD
     public LuxuryTax(String name) {
         super(name, 0, 0);
     }
@@ -19,16 +18,3 @@ public class LuxuryTax extends Square {
         }
     }
 }
-=======
-	public LuxuryTax(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public void doAction(Player player, Board board) {
-		player.getMoney().reduceMoney(75);
-	}
-
-}
->>>>>>> eafa3ad1d8f6dc5c8999e635de3730c7e86992c7
