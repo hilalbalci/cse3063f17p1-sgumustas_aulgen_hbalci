@@ -1,5 +1,6 @@
 public class IncomeTax extends Square {
 
+<<<<<<< HEAD
     public IncomeTax(String name) {
         super(name, 0, 0);
     }
@@ -17,4 +18,17 @@ public class IncomeTax extends Square {
             player.setLost(true);
         }
     }
+=======
+	public IncomeTax(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void doAction(Player player, Board board) {
+		int a = player.getMoney().getMoney()/10;
+		player.getMoney().reduceMoney(a);
+	}
+
+>>>>>>> eafa3ad1d8f6dc5c8999e635de3730c7e86992c7
 }

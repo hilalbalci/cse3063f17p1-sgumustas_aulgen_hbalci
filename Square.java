@@ -1,4 +1,5 @@
 public abstract class Square {
+<<<<<<< HEAD
     private String name;
     private int price, rent;
     private Player owner = null;
@@ -42,4 +43,14 @@ public abstract class Square {
         owner = null;
         isOwned = false;
     }
+=======
+	private String name;
+	public Square(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return name;
+	}
+	public abstract void doAction(Player player, Board board);
+>>>>>>> eafa3ad1d8f6dc5c8999e635de3730c7e86992c7
 }
