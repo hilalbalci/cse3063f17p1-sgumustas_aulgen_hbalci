@@ -103,16 +103,16 @@ def wordcloudfile(all_documents, string):
 
 
 #   Deactivate these if you are using url. If you don't want to use url or have low internet connection, you can use
-#   local files under altenativeInputs folder.
+#   local files under "inputs" folder.
 
-doc1 = convert("alternativeInputs/doc1.pdf")
-doc2 = convert("alternativeInputs/doc2.pdf")
-doc3 = convert("alternativeInputs/doc3.pdf")
-doc4 = convert("alternativeInputs/doc4.pdf")
-doc5 = convert("alternativeInputs/doc5.pdf")
-doc6 = convert("alternativeInputs/doc6.pdf")
-doc7 = convert("alternativeInputs/doc7.pdf")
-doc8 = convert("alternativeInputs/doc8.pdf")
+doc1 = convert("inputs/doc1.pdf")
+doc2 = convert("inputs/doc2.pdf")
+doc3 = convert("inputs/doc3.pdf")
+doc4 = convert("inputs/doc4.pdf")
+doc5 = convert("inputs/doc5.pdf")
+doc6 = convert("inputs/doc6.pdf")
+doc7 = convert("inputs/doc7.pdf")
+doc8 = convert("inputs/doc8.pdf")
 
 allDoc = [doc1, doc2, doc3, doc4, doc5, doc6, doc7, doc8]
 
