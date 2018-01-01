@@ -65,7 +65,10 @@ def csvfile(all_documents, string):
     length = len(all_documents)
     i = 0
     while i < length:
-        filename = "document_" + str(i + 1) + string + "_list.csv"
+        if i == length - 1:
+            filename = "all_documents" + string + "_list.csv"
+        else:
+            filename = "document_" + str(i + 1) + string + "_list.csv"
         file = open(filename, 'w', encoding='utf-8')
         for peer in all_documents[i]:
             file.write("%s,%.16f\n" % (peer[0], peer[1]))
@@ -78,7 +81,10 @@ def wordcloudfile(all_documents, string):
     length = len(all_documents)
     i = 0
     while i < length:
-        filename = "document_" + str(i + 1) + string + "_WordCloud.pdf"
+        if i == length - 1:
+            filename = "all_documents" + string + "_WordCloud.pdf"
+        else:
+            filename = "document_" + str(i + 1) + string + "_WordCloud.pdf"
         text = ' '.join(word[0] for word in all_documents[i])
         wordcloud = WordCloud(width=2000, height=1000, background_color="white", relative_scaling=1.0,
                               stopwords={'to', 'of'}).generate(text)
@@ -90,48 +96,60 @@ def wordcloudfile(all_documents, string):
     return
 
 
-#   Activate here if you are using urls to pull files online
+def main():
 
-# doc1 = convert("https://goo.gl/FCE7fa")
-# doc2 = convert("https://goo.gl/R9no1z")
-# doc3 = convert("https://goo.gl/Ey6Lkw")
-# doc4 = convert("https://goo.gl/Rc2PmK")
-# doc5 = convert("https://goo.gl/C3SoVM")
-# doc6 = convert("https://goo.gl/EtBMu3")
-# doc7 = convert("https://goo.gl/ZVjV8T")
-# doc8 = convert("https://goo.gl/MVWiUC")
+    #   Activate here if you are using urls to pull files online
+
+    # doc1 = convert("https://goo.gl/FCE7fa")
+    # doc2 = convert("https://goo.gl/R9no1z")
+    # doc3 = convert("https://goo.gl/Ey6Lkw")
+    # doc4 = convert("https://goo.gl/Rc2PmK")
+    # doc5 = convert("https://goo.gl/C3SoVM")
+    # doc6 = convert("https://goo.gl/EtBMu3")
+    # doc7 = convert("https://goo.gl/ZVjV8T")
+    # doc8 = convert("https://goo.gl/MVWiUC")
+
+    #   Deactivate these if you are using url. If you don't want to use url or have low internet connection, you can use
+    #   local files under altenativeInputs folder.
+
+    doc1 = convert("inputs/doc1.pdf")
+    doc2 = convert("inputs/doc2.pdf")
+    doc3 = convert("inputs/doc3.pdf")
+    doc4 = convert("inputs/doc4.pdf")
+    doc5 = convert("inputs/doc5.pdf")
+    doc6 = convert("inputs/doc6.pdf")
+    doc7 = convert("inputs/doc7.pdf")
+    doc8 = convert("inputs/doc8.pdf")
+
+    alldoc = [doc1, doc2, doc3, doc4, doc5, doc6, doc7, doc8]
+
+    cleanwords = splitwords(alldoc)
+
+    tf_words_all_documents = []
+
+    tf_idf_words_all_documents = []
+    # Here we are normalizing our words to calculate values for all of them at once.
+    allinone = []
+    for each in cleanwords:
+        allinone += each
+
+    cleanwords.append(allinone)
+
+    #   We are calculating all tf and tf-idf values for each unique word in each file.
+
+    for document in cleanwords:
+        tf_words_all_documents.append(tf_word_list_creator(document))
+        tf_idf_words_all_documents.append(tf_idf_word_list_creator(document, cleanwords))
+
+    #   After that we are creating output files seperately.
+
+    csvfile(tf_words_all_documents, "_tf")
+    wordcloudfile(tf_words_all_documents, "_tf")
+
+    csvfile(tf_idf_words_all_documents, "_tfidf")
+    wordcloudfile(tf_idf_words_all_documents, "_tfidf")
+    return
 
 
-#   Deactivate these if you are using url. If you don't want to use url or have low internet connection, you can use
-#   local files under altenativeInputs folder.
-
-doc1 = convert("inputs/doc1.pdf")
-doc2 = convert("inputs/doc2.pdf")
-doc3 = convert("inputs/doc3.pdf")
-doc4 = convert("inputs/doc4.pdf")
-doc5 = convert("inputs/doc5.pdf")
-doc6 = convert("inputs/doc6.pdf")
-doc7 = convert("inputs/doc7.pdf")
-doc8 = convert("inputs/doc8.pdf")
-
-allDoc = [doc1, doc2, doc3, doc4, doc5, doc6, doc7, doc8]
-
-cleanwords = splitwords(allDoc)
-
-tf_words_all_documents = []
-
-tf_idf_words_all_documents = []
-
-#   We are calculating all tf and tf-idf values for each unique word in each file.
-
-for document in cleanwords:
-    tf_words_all_documents.append(tf_word_list_creator(document))
-    tf_idf_words_all_documents.append(tf_idf_word_list_creator(document, cleanwords))
-
-#   After that we are creating output files seperately.
-
-csvfile(tf_words_all_documents, "_tf")
-wordcloudfile(tf_words_all_documents, "_tf")
-
-csvfile(tf_idf_words_all_documents, "_tfidf")
-wordcloudfile(tf_idf_words_all_documents, "_tfidf")
+if __name__ == '__main__':
+    main()
