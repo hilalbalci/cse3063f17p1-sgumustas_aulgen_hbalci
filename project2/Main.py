@@ -12,6 +12,7 @@ import urllib.request
 
 import matplotlib.pyplot as plt
 import nltk
+import time
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
@@ -86,8 +87,11 @@ def wordcloudfile(all_documents, string):
         else:
             filename = "document_" + str(i + 1) + string + "_WordCloud.pdf"
         text = ' '.join(word[0] for word in all_documents[i])
+        d = {}
+        for a, x in all_documents[i]:
+            d[a] = float(x)
         wordcloud = WordCloud(width=2000, height=1000, background_color="white", relative_scaling=1.0,
-                              stopwords={'to', 'of'}).generate(text)
+                              stopwords={'to', 'of'}).generate_from_frequencies(d)
         plt.figure(figsize=(20, 10), facecolor='k')
         plt.imshow(wordcloud)
         plt.axis("off")
@@ -97,8 +101,8 @@ def wordcloudfile(all_documents, string):
 
 
 def main():
-
-    #   Activate here if you are using urls to pull files online
+    print(time.strftime("%c"))
+    #   Activate here if you are using urls to pull files online and also activate urllib import
 
     # doc1 = convert("https://goo.gl/FCE7fa")
     # doc2 = convert("https://goo.gl/R9no1z")
@@ -148,6 +152,7 @@ def main():
 
     csvfile(tf_idf_words_all_documents, "_tfidf")
     wordcloudfile(tf_idf_words_all_documents, "_tfidf")
+    print(time.strftime("%c"))
     return
 
 
