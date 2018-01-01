@@ -32,7 +32,7 @@ def convert(fname, pages=None):
     converter = TextConverter(manager, output, laparams=LAParams())
     interpreter = PDFPageInterpreter(manager, converter)
     #  link, temp = urllib.request.urlretrieve(fname)  #    Activate this line if you are using url
-    infile = open(fname, 'rb')  #   Change fname with "link" here if you are using url.
+    infile = open(fname, 'rb')  # Change fname with "link" here if you are using url.
     for page in PDFPage.get_pages(infile, pagenums):
         interpreter.process_page(page)
     infile.close()
@@ -55,7 +55,7 @@ def cleaneachdocument(document_to_clean):
     document_to_clean = re.sub(r"[^\w\s]", ' ', document_to_clean)
     document_to_clean = re.sub(r"(^|\W)\d+($|\W)", ' ', document_to_clean)
     document_to_clean = re.sub(r"[0-9]+", ' ', document_to_clean)
-    document_to_clean = re.sub('\s+', ' ', document_to_clean).strip()
+    document_to_clean = re.sub(r"[\s+]", ' ', document_to_clean).strip()
     document_to_clean = nltk.word_tokenize(document_to_clean)
     document_to_clean = [word for word in document_to_clean if word not in wide_range_stopwords]
     return document_to_clean
@@ -103,7 +103,7 @@ def wordcloudfile(all_documents, string):
 
 
 #   Deactivate these if you are using url. If you don't want to use url or have low internet connection, you can use
-#   local files under "inputs" folder.
+#   local files under altenativeInputs folder.
 
 doc1 = convert("inputs/doc1.pdf")
 doc2 = convert("inputs/doc2.pdf")
