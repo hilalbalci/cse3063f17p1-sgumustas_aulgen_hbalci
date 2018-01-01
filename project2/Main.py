@@ -100,7 +100,6 @@ def wordcloudfile(all_documents, string):
 
 
 def main():
-    print(time.strftime("%c"))
     #   Activate here if you are using urls to pull files online and also activate urllib import
 
     # doc1 = convert("https://goo.gl/FCE7fa")
@@ -151,7 +150,6 @@ def main():
 
     csvfile(tf_idf_words_all_documents, "_tfidf")
     wordcloudfile(tf_idf_words_all_documents, "_tfidf")
-    print(time.strftime("%c"))
     return
 
 
