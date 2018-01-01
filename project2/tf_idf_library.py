@@ -17,7 +17,7 @@ def tf_word_list_creator(document):
     #   From Wikipedia as Prof. Ganiz described, we used tf formula as
     #   (count of word in that document/maximum occuring term number)
     while i < len(return_list):
-        return_list[i] = [return_list[i], float(document.count(return_list[i])) / float(maximum)]
+        return_list[i] = [return_list[i], document.count(return_list[i]) / maximum]
         i += 1
     #   We are sorting our words
     return_list.sort(key=lambda x: x[1], reverse=True)
@@ -34,7 +34,7 @@ def idfvalue(word, documents):
     for i in documents:
         if word in i:
             total_count += 1
-    return math.log(1 + (float(len(documents)) / float(total_count)))
+    return math.log(1 + (len(documents) / total_count))
 
 
 #   In this function we are multiplying tf and idf values for each word in each document
@@ -46,8 +46,7 @@ def tf_idf_word_list_creator(document, documents):
     i = 0
     while i < len(return_list):
         return_list[i] = [return_list[i],
-                          (float(document.count(return_list[i])) / float(maximum)) * idfvalue(return_list[i],
-                                                                                              documents[:-1])]
+                          (document.count(return_list[i]) / maximum) * idfvalue(return_list[i], documents[:-1])]
         i += 1
     return_list.sort(key=lambda x: x[1], reverse=True)
     return return_list[:50]
