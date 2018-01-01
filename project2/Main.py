@@ -86,7 +86,6 @@ def wordcloudfile(all_documents, string):
             filename = "all_documents" + string + "_WordCloud.pdf"
         else:
             filename = "document_" + str(i + 1) + string + "_WordCloud.pdf"
-        text = ' '.join(word[0] for word in all_documents[i])
         d = {}
         for a, x in all_documents[i]:
             d[a] = float(x)
